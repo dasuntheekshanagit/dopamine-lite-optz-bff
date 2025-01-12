@@ -11,7 +11,7 @@ export const accessGroupService = {
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {
-            return response.data;
+            return response.data.data;
         })
         .catch((error) => {
             logger.error(`An error occurred while fetching access list for email: ${email}`);

@@ -8,12 +8,10 @@ export const classesController = {
     getAllClasses: async (req: Request, res: Response) => {
         try {
             const classesList = await classesService.getAllClasses();
-    
             const response = {
-                data: classesList
+                data: classesList.data
             };
-            
-            res.json({ success: true, data: response });
+            res.json({ success: true, data: response.data });
         } catch (error) {
             logger.error(
                 `Error fetching all classes`,

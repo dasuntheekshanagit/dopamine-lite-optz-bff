@@ -7,11 +7,11 @@ export const lectureService = {
     getAllLectures: async (classId: any) => {
         return await apiInstances.backendInstance
         .request({
-            url: `/lectures/${classId}`,
+            url: `/lectures/class/${classId}`,
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {
-            return response.data;
+            return response.data.data;
         })
         .catch((error) => {
             logger.error(`An error occurred while fetching all lectures`);

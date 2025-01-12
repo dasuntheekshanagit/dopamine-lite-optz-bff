@@ -5,8 +5,8 @@ import sharedResponses from "../../shared/sharedResponses";
 import { noteService } from "../services/NoteService";
 import { lectureService } from "../services/LectureService";
 import { accessGroupService } from "../services/AcceseGroupService";
-import { ILecture } from "../../types copy/lecture.types";
-import { INote } from "../../types copy/note.types";
+import { ILecture } from "../../types/lecture.types";
+import { INote } from "../../types/note.types";
 
 export const lessonController = {
     getAllClasses: async (req: Request, res: Response) => {
@@ -18,11 +18,20 @@ export const lessonController = {
                 noteService.getAllNotes(classId)
             ]);
 
-            const accessSet = new Set(accessList.map(item => item.id));
+
+            if (!accessList || accessList.length === 0) {
+                res.json({ success: true, data: null });
+            }
+            
+            if (!Array.isArray(accessList)) {
+                throw new TypeError('accessList is not an array');
+            }
+
+            const accessSet = new Set(accessList.map(item => item));
 
             const updateAccessField = (list: (ILecture | INote)[]) => {
                 return list.map(item => {
-                    if (accessSet.has(item.classId)) {
+                    if (accessSet.has(item.accessGroupId)) {
                         item.access = true;
                     } else {
                         item.access = false;
@@ -37,7 +46,7 @@ export const lessonController = {
             const updatedNotes = updateAccessField(notesList);
 
             const response = {
-                data: updatedLectures,
+                lectures: updatedLectures,
                 notes: updatedNotes
             };
 

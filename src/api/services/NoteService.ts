@@ -7,11 +7,11 @@ export const noteService = {
     getAllNotes: async (classId: any) => {
         return await apiInstances.backendInstance
         .request({
-            url: `/notes/{classId}`,
+            url: `/notes/class/${classId}`,
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {
-            return response.data;
+            return response.data.data;
         })
         .catch((error) => {
             logger.error(`An error occurred while fetching all notes`);
