@@ -1,0 +1,19 @@
+node_modules/
+.env
+coverage/
+.idea/
+.vsc
+
+#config
+config.json
+
+#vertex-ai config
+veretx-ai-config.json
+piiRedactionconfigs.json
+
+#coverage
+coverage
+# sonar
+.scannerwork/
+
+dist/
