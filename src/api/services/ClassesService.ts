@@ -18,4 +18,19 @@ export const classesService = {
             throw error;
         });
     },
-}
+
+    getClassById: async (classId: string) => {
+        return await apiInstances.backendInstance
+        .request({
+            url: `/classes/${classId}`,
+            method: constants.HTTP_METHODS.GET,
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            logger.error(`An error occurred while fetching the class with ID: ${classId}`);
+            throw error;
+        });
+    },
+};

@@ -1,10 +1,13 @@
 import express, { Application, Request, Response } from "express";
 import bodyParser from "body-parser";
 import router from "./api/routes";
+import cors from "cors"; 
 
 
 const app: Application = express();
 const PORT: number = 8080;
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(express.json());

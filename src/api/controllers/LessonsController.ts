@@ -7,13 +7,15 @@ import { lectureService } from "../services/LectureService";
 import { accessGroupService } from "../services/AcceseGroupService";
 import { ILecture } from "../../types/lecture.types";
 import { INote } from "../../types/note.types";
+import { classesService } from "../services/ClassesService";
 
 export const lessonController = {
     getAllClasses: async (req: Request, res: Response) => {
         const { classId, email } = req.query;
         try {
-            const [accessList, lectureList, notesList] = await Promise.all([
+            const [accessList, classDetails, lectureList, notesList] = await Promise.all([
                 accessGroupService.getAccessListByEmail(email),
+                classesService.getClassById(classId),
                 lectureService.getAllLectures(classId),
                 noteService.getAllNotes(classId)
             ]);
@@ -46,6 +48,7 @@ export const lessonController = {
             const updatedNotes = updateAccessField(notesList);
 
             const response = {
+                classDetails: classDetails.data,
                 lectures: updatedLectures,
                 notes: updatedNotes
             };
