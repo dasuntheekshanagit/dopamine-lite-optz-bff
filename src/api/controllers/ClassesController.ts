@@ -26,6 +26,55 @@ export const classesController = {
         }
     },
 
+    createClass: async (req: Request, res: Response) => {
+        const { name } = req.body;
+        const { email } = req.query;
+
+        try {
+            if (!email){
+                console.error("Email is required");
+                return res.status(HttpStatusCode.BadRequest).json({
+                    success: false,
+                    message: "Email is required"
+                });
+            }
+
+            let existingClass;
+            try {
+                existingClass = await classesService.getClassByName(name);
+            } catch (error) {
+                if (error.response && error.response.status === HttpStatusCode.NotFound) {
+                    existingClass = null;
+                } else {
+                    throw error;
+                }
+            }
+
+            if (existingClass && existingClass.data.name == name) {
+                console.error("Class name already exists");
+                return res.status(HttpStatusCode.BadRequest).json({
+                    success: false,
+                    message: "Class name already exists"
+                });
+            }
+
+            const newClass = await classesService.createClass(name);
+
+            res.json({ success: true, data: newClass });
+        } catch (error) {
+            logger.error(
+                `Error creating class`,
+                error
+            );
+            return sharedResponses.ErrorResponse(
+                res,
+                error?.response?.status || HttpStatusCode.InternalServerError,
+                `Error creating class`,
+                error?.response?.data?.data?.message || error.message
+            );
+        }
+    },
+
     updateClass: async (req: Request, res: Response) => {
         const { classId } = req.params;
         const { name, ...classData } = req.body;
@@ -42,9 +91,18 @@ export const classesController = {
                 });
             }
 
-            const existingClass = await classesService.getClassById(classId);
+            let existingClass;
+            try {
+                existingClass = await classesService.getClassByName(name);
+            } catch (error) {
+                if (error.response && error.response.status === HttpStatusCode.NotFound) {
+                    existingClass = null;
+                } else {
+                    throw error;
+                }
+            }
 
-            if (!name || existingClass.name == name) {
+            if (!name || (existingClass && existingClass.data.name == name)) {
                 console.error("Class name does not match");
                 return res.status(HttpStatusCode.BadRequest).json({
                     success: false,
@@ -84,7 +142,7 @@ export const classesController = {
 
             const existingClass = await classesService.getClassById(classId);
 
-            if (!existingClass.classId) {
+            if (!existingClass.data.classId) {
                 console.error("Class Id does not exist");
                 return res.status(HttpStatusCode.BadRequest).json({
                     success: false,

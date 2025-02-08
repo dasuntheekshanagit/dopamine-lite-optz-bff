@@ -34,6 +34,39 @@ export const classesService = {
         });
     },
 
+    getClassByName: async (name: string) => {
+        return await apiInstances.backendInstance
+        .request({
+            url: `/classes/search?name=${name}`,
+            method: constants.HTTP_METHODS.GET,
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            logger.error(`An error occurred while fetching the class with name: ${name}`);
+            throw error;
+        });
+    },
+
+    createClass: async (name: any) => {
+        const data = { name: name };
+        return await apiInstances.backendInstance
+        .request({
+            url: `/classes`,
+            method: constants.HTTP_METHODS.POST,
+            data: data,
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            logger.error(`An error occurred while creating the class`);
+            throw error;
+        }
+        );
+    },
+
     updateClass: async (classId: string, name: any) => {
         const data = { name: name };
         return await apiInstances.backendInstance
