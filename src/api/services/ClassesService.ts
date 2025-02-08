@@ -35,7 +35,7 @@ export const classesService = {
     },
 
     updateClass: async (classId: string, name: any) => {
-        const data = { name: name};
+        const data = { name: name };
         return await apiInstances.backendInstance
         .request({
             url: `/classes/${classId}`,
@@ -47,6 +47,21 @@ export const classesService = {
         })
         .catch((error) => {
             logger.error(`An error occurred while updating the class with ID: ${classId}`);
+            throw error;
+        });
+    },
+
+    deleteClass: async (classId: string) => {
+        return await apiInstances.backendInstance
+        .request({
+            url: `/classes/${classId}`,
+            method: constants.HTTP_METHODS.DELETE,
+        })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            logger.error(`An error occurred while deleting the class with ID: ${classId}`);
             throw error;
         });
     },

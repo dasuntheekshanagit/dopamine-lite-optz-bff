@@ -67,5 +67,45 @@ export const classesController = {
                 error?.response?.data?.data?.message || error.message
             );
         }
+    },
+
+    deleteClass: async (req: Request, res: Response) => {
+        const { classId } = req.params;
+        const { email } = req.query;
+
+        try {
+            if (!email){
+                console.error("Email is required");
+                return res.status(HttpStatusCode.BadRequest).json({
+                    success: false,
+                    message: "Email is required"
+                });
+            }
+
+            const existingClass = await classesService.getClassById(classId);
+
+            if (!existingClass.classId) {
+                console.error("Class Id does not exist");
+                return res.status(HttpStatusCode.BadRequest).json({
+                    success: false,
+                    message: "Class Id does not exist"
+                });
+            }
+
+            await classesService.deleteClass(classId);
+
+            res.json({ success: true, message: `Class with ID: ${classId} has been deleted` });
+        } catch (error) {
+            logger.error(
+                `Error deleting class with ID: ${classId}`,
+                error
+            );
+            return sharedResponses.ErrorResponse(
+                res,
+                error?.response?.status || HttpStatusCode.InternalServerError,
+                `Error deleting class with ID: ${classId}`,
+                error?.response?.data?.data?.message || error.message
+            );
+        }
     }
 };
