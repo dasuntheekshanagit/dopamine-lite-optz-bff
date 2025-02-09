@@ -12,6 +12,8 @@ import { classesService } from "../services/ClassesService";
 export const lessonController = {
     getAllClasses: async (req: Request, res: Response) => {
         const { classId, email } = req.query;
+        let updatedLectures = null;
+        let updatedNotes = null;
         try {
             const [accessList, classDetails, lectureList, notesList] = await Promise.all([
                 accessGroupService.getAccessListByEmail(email),
@@ -44,8 +46,14 @@ export const lessonController = {
                 });
             };
 
-            const updatedLectures = updateAccessField(lectureList);
-            const updatedNotes = updateAccessField(notesList);
+
+            if (lectureList != null){
+                updatedLectures = updateAccessField(lectureList);
+            } 
+
+            if (notesList != null){
+                updatedNotes = updateAccessField(notesList);
+            }
 
             const response = {
                 classDetails: classDetails.data,
