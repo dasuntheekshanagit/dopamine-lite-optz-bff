@@ -3,6 +3,6 @@ import { lessonController } from "../controllers/LessonsController";
 
 const router = express.Router();
 
-router.get("/", lessonController.getAllClasses);
+router.get("/", lessonController.getAllLessonsByEmail);
 
 export default router;

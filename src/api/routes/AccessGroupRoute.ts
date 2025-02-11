@@ -5,9 +5,9 @@ import { accessGroupController } from "../controllers/AcceseGroupController";
 const router = express.Router();
 
 router.get("/", accessGroupController.getAllACL);
-router.get("/:accessListId", accessGroupController.getACLById);
+router.get("/:accessGroupId", accessGroupController.getACLById);
 router.post("/", accessGroupController.createACL);
-router.put("/:accessListId", accessGroupController.updateACL);
-router.delete("/:accessListId", accessGroupController.deleteACL);
+router.put("/:accessGroupId", accessGroupController.updateACL);
+router.delete("/:accessGroupId", accessGroupController.deleteACL);
 
 export default router;
