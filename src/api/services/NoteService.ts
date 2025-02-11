@@ -7,7 +7,7 @@ export const noteService = {
     getAllNotesByClass: async (classId: any) => {
         return await apiInstances.backendInstance
         .request({
-            url: `/notes/?class=${classId}`,
+            url: `/notes/class?classId=${classId}`,
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {

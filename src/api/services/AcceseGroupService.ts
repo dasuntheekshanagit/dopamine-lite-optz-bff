@@ -7,7 +7,7 @@ export const accessGroupService = {
     getAccessListByEmail: async (email: string) => {
         return await apiInstances.backendInstance
         .request({
-            url: `/access-groups/email/${email}`,
+            url: `/access-groups/email?email=${email}`,
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {

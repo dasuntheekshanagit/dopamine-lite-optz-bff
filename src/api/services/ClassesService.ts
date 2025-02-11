@@ -37,7 +37,7 @@ export const classesService = {
     getClassByName: async (name: string) => {
         return await apiInstances.backendInstance
         .request({
-            url: `/classes/search?name=${name}`,
+            url: `/classes/name?name=${name}`,
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {

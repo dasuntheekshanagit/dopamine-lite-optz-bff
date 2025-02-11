@@ -7,7 +7,7 @@ export const lectureService = {
     getAllLecturesByClass: async (classId: any) => {
         return await apiInstances.backendInstance
         .request({
-            url: `/lectures/?class=${classId}`,
+            url: `/lectures/class?classId=${classId}`,
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {

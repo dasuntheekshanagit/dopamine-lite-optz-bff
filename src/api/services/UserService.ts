@@ -7,7 +7,7 @@ export const userService = {
     getUserRoleByEmail: async (email: string) => {
         return await apiInstances.backendInstance
         .request({
-            url: `/users?email=${email}`,
+            url: `/users/email?email=${email}`,
             method: constants.HTTP_METHODS.GET,
         })
         .then((response) => {
