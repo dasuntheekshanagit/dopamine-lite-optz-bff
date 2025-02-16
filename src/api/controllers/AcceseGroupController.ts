@@ -88,7 +88,7 @@ export const accessGroupController = {
                 }
             }
 
-            if (existingClass && existingClass.data.accessGroupId == accessListData.accessGroupId) {
+            if (existingClass && existingClass.accessGroupId == accessListData.accessGroupId) {
                 console.error("Class name already exists");
                 return res.status(HttpStatusCode.BadRequest).json({
                     success: false,
@@ -140,11 +140,11 @@ export const accessGroupController = {
 
             console.log(existingClass);
 
-            if (existingClass && existingClass.data.accessGroupId == accessListData.accessGroupId) {
-                console.error("Class name already exists");
+            if (existingClass && existingClass.accessGroupId != accessListData.accessGroupId) {
+                console.error("ACL Group Id can not change");
                 return res.status(HttpStatusCode.BadRequest).json({
                     success: false,
-                    message: "Class name already exists"
+                    message: "ACL Group Id can not change"
                 });
             }
 
@@ -184,7 +184,7 @@ export const accessGroupController = {
 
             console.log(existingClass);
 
-            if (!existingClass.data.accessGroupId) {
+            if (!existingClass.accessGroupId) {
                 console.error("Class Id does not exist");
                 return res.status(HttpStatusCode.BadRequest).json({
                     success: false,
