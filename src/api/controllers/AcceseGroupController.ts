@@ -35,7 +35,7 @@ export const accessGroupController = {
     },
 
     getACLById: async (req: Request, res: Response) => {
-        const { accessListId } = req.params.accessGroupId;
+        const accessListId = req.params.accessGroupId;
         const { email } = req.query;
 
         try {
@@ -114,7 +114,7 @@ export const accessGroupController = {
     },
 
     updateACL: async (req: Request, res: Response) => {
-        const { accessListId } = req.params.accessGroupId;
+        const accessListId = req.params.accessGroupId;
         const accessListData = req.body;
         const { email } = req.query;
 
@@ -166,7 +166,7 @@ export const accessGroupController = {
     },
 
     deleteACL: async (req: Request, res: Response) => {
-        const { accessListId } = req.params.accessGroupId;
+        const accessListId = req.params.accessGroupId;
         const { email } = req.query;
 
         try {
