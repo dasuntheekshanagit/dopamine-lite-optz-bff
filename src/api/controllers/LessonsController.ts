@@ -112,7 +112,7 @@ export const lessonController = {
 
     createLessons: async (req: Request, res: Response) => {
         const classId = req.body.classId;
-        const accessListId = req.body.accessListId;
+        const accessGroupId = req.body.accessGroupId;
         const { email } = req.query;
 
         try {
@@ -125,7 +125,7 @@ export const lessonController = {
             }
 
             const [accessList, classDetails] = await Promise.all([
-                accessGroupService.getAccessListById(accessListId),
+                accessGroupService.getAccessListById(accessGroupId),
                 classesService.getClassById(classId),
             ]);
 
@@ -157,7 +157,7 @@ export const lessonController = {
     updateLessons: async (req: Request, res: Response) => {
         const classId = req.body.classId;
         const lectureId = req.params.lectureId;
-        const accessListId = req.body.accessListId;
+        const accessGroupId = req.body.accessGroupId;
         const { email } = req.query;
 
         try {
@@ -170,7 +170,7 @@ export const lessonController = {
             }
 
             const [accessList, classDetails, lectureData] = await Promise.all([
-                accessGroupService.getAccessListById(accessListId),
+                accessGroupService.getAccessListById(accessGroupId),
                 classesService.getClassById(classId),
                 lectureService.getLectureById(lectureId)
             ]);
